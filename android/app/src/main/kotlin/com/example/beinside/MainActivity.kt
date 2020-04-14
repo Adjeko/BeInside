@@ -1,4 +1,4 @@
-package com.example.beinside
+package com.game.beinside
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
