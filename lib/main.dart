@@ -1,3 +1,4 @@
+import 'package:beinside/services/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +10,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjeko88@gmail.com", password: "hp1955");
+    // FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjekoooo@gmail.com", password: "hp1955");
+    Authentication.googleSignIn();
     return MultiProvider(
       providers: [
         StreamProvider<FirebaseUser>.value(
@@ -58,7 +60,8 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjeko88@gmail.com", password: "hp1955"); },
+        onPressed: Authentication.googleSignIn,
+        // onPressed: () {FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjeko88@gmail.com", password: "hp1955"); },
         tooltip: 'Login',
         child: Icon(Icons.security),
       ), // This trailing comma makes auto-formatting nicer for build methods.
