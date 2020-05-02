@@ -4,6 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'models/taskList.dart';
 
+import 'package:firebase_admob/firebase_admob.dart';
+
+
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -12,6 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjekoooo@gmail.com", password: "hp1955");
     // Authentication.googleSignIn();
+    FirebaseAdMob.instance.initialize(appId: "ca-app-pub-3966289857724701~2395283496");
     return MultiProvider(
       providers: [
         StreamProvider<FirebaseUser>.value(
@@ -36,10 +41,38 @@ class MyHomePage extends StatelessWidget {
 
   MyHomePage({this.title});
 
+  
+
+  
+
+  void initAd() {
+    BannerAd ba = BannerAd(
+      adUnitId: BannerAd.testAdUnitId,
+      // adUnitId: "ca-app-pub-3966289857724701/1365558265",
+      size: AdSize.smartBanner,
+      targetingInfo: MobileAdTargetingInfo(keywords: <String>['flutterio', 'beautiful apps'],
+          contentUrl: 'https://flutter.io',
+          birthday: DateTime.now(),
+          childDirected: false,
+          designedForFamilies: false,
+          gender: MobileAdGender.male, // or MobileAdGender.female, MobileAdGender.unknown
+          testDevices: <String>[],
+        ),
+      listener: (MobileAdEvent event) {
+        print("BannerAd event is $event");
+      },
+    );
+
+    ba..load()..show(
+      anchorOffset: 100.0,
+      anchorType: AnchorType.bottom,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     FirebaseUser user = Provider.of<FirebaseUser>(context);
-
+    initAd();
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
