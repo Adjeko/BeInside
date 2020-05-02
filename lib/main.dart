@@ -44,31 +44,67 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Center(
-        child: 
-          (() {
-              if (user != null) {
-              return StreamBuilder<TaskList> (
-                stream: TaskList.streamTaskList(user),
-                builder: (context, snapshot) {
-                  TaskList list = snapshot.data;
+      body: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: RaisedButton(
+                  child: Text("Google"),
+                  onPressed: Authentication.googleSignIn, 
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: RaisedButton(
+                  child: Text("Facebook"),
+                  onPressed: Authentication.facebookSignIn, 
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: RaisedButton(
+                  child: Text("Twitter"),
+                  onPressed: Authentication.twitterSignIn, 
+                ),
+              ),
+            ],
+          ),
+          Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: RaisedButton(
+                  child: Text("Sign Out"),
+                  onPressed: Authentication.signOut, 
+                ),
+              ),
+          Center(
+            child: 
+              (() {
+                  if (user != null) {
+                  return StreamBuilder<TaskList> (
+                    stream: TaskList.streamTaskList(user),
+                    builder: (context, snapshot) {
+                      TaskList list = snapshot.data;
 
-                  if (list != null) {
-                    return ListView.builder(
-                      itemCount: 1,
-                      itemBuilder: (context, index) {
-                        return Text("${list.icon} | ${list.title} | ${list.subtitle}");
-                      },
-                    );
-                  } else {
-                    return Text("keine Liste erhalten");
-                  }
-                },
-              );
-            } else {
-              return Text("kein User angemeldet");
-            }
-          }())
+                      if (list != null) {
+                        return ListView.builder(
+                          itemCount: 1,
+                          itemBuilder: (context, index) {
+                            return Text("${list.icon} | ${list.title} | ${list.subtitle}");
+                          },
+                        );
+                      } else {
+                        return Text("keine Liste erhalten");
+                      }
+                    },
+                  );
+                } else {
+                  return Text("kein User angemeldet");
+                }
+              }())
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: Authentication.twitterSignIn,

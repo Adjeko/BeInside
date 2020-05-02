@@ -16,6 +16,10 @@ class Authentication {
     final FirebaseUser user = (await FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjekoooo@gmail.com", password: "hp1955")).user;
   }
 
+  static void signOut() async {
+    FirebaseAuth.instance.signOut();
+  }
+
   static void googleSignIn() async {
     final GoogleSignIn googleSignIn = new GoogleSignIn();
     final GoogleSignInAccount acc = await googleSignIn.signIn();
