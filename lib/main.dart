@@ -45,22 +45,33 @@ class MyHomePage extends StatelessWidget {
         title: Text(title),
       ),
       body: Center(
-        child: StreamBuilder<TaskList> (
-          stream: TaskList.streamTaskList(user),
-          builder: (context, snapshot) {
-            TaskList list = snapshot.data;
+        child: 
+          (() {
+              if (user != null) {
+              return StreamBuilder<TaskList> (
+                stream: TaskList.streamTaskList(user),
+                builder: (context, snapshot) {
+                  TaskList list = snapshot.data;
 
-            return ListView.builder(
-              itemCount: 1,
-              itemBuilder: (context, index) {
-                return Text("${list.icon} | ${list.title} | ${list.subtitle}");
-              },
-            );
-          },
-        ),
+                  if (list != null) {
+                    return ListView.builder(
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        return Text("${list.icon} | ${list.title} | ${list.subtitle}");
+                      },
+                    );
+                  } else {
+                    return Text("keine Liste erhalten");
+                  }
+                },
+              );
+            } else {
+              return Text("kein User angemeldet");
+            }
+          }())
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: Authentication.facebookSignIn,
+        onPressed: Authentication.twitterSignIn,
         // onPressed: () {FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjeko88@gmail.com", password: "hp1955"); },
         tooltip: 'Login',
         child: Icon(Icons.security),
