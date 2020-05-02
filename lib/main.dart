@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjekoooo@gmail.com", password: "hp1955");
-    Authentication.googleSignIn();
+    // Authentication.googleSignIn();
     return MultiProvider(
       providers: [
         StreamProvider<FirebaseUser>.value(
@@ -60,7 +60,7 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: Authentication.googleSignIn,
+        onPressed: Authentication.facebookSignIn,
         // onPressed: () {FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjeko88@gmail.com", password: "hp1955"); },
         tooltip: 'Login',
         child: Icon(Icons.security),

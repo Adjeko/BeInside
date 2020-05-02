@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 class Authentication {
   var auth = FirebaseAuth.instance;
@@ -24,5 +25,22 @@ class Authentication {
       accessToken: googleAuth.accessToken);
 
     final FirebaseUser user = (await FirebaseAuth.instance.signInWithCredential(credential)).user;
+  }
+
+  static void facebookSignIn() async {
+    final facebookLogin = FacebookLogin();
+    final result = await facebookLogin.logIn(['email']);
+
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        final token = result.accessToken.token;
+        AuthCredential fbCredential = FacebookAuthProvider.getCredential(accessToken: token);
+        final FirebaseUser user = (await FirebaseAuth.instance.signInWithCredential(fbCredential)).user;
+        return;
+      case FacebookLoginStatus.cancelledByUser:
+      case FacebookLoginStatus.error:
+      default:
+
+    }
   }
 }
