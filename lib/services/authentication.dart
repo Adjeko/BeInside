@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:get_it/get_it.dart';
 
 class Authentication {
   var auth = FirebaseAuth.instance;
@@ -49,9 +50,8 @@ class Authentication {
   }
 
   static void twitterSignIn() async {
-    final RemoteConfig remoteConfig = await RemoteConfig.instance;
-    String consumerKey = remoteConfig.getString("twitterConsumerKey");
-    String consumerSecret = remoteConfig.getString("twitterConsumerSecret");
+    String consumerKey = GetIt.I<RemoteConfig>().getString("twitterConsumerKey");
+    String consumerSecret = GetIt.I<RemoteConfig>().getString("twitterConsumerSecret");
 
     final TwitterLogin twitterLogin = new TwitterLogin(consumerKey: consumerKey, consumerSecret: consumerSecret);
 

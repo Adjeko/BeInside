@@ -1,10 +1,13 @@
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:get_it/get_it.dart';
+
 
 class Admob {
+
   void init() async {
-    final RemoteConfig remoteConfig = await RemoteConfig.instance;
-    String appId = remoteConfig.getString("admobAppID");
+
+    String appId = GetIt.I<RemoteConfig>().getString("admobAppID");
 
     FirebaseAdMob.instance
         .initialize(appId: appId);

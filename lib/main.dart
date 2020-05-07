@@ -2,7 +2,10 @@ import 'package:beinside/services/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+
 import 'models/taskList.dart';
+import 'services/admob.dart';
+import 'services/remoteconfiguration.dart';
 
 
 
@@ -15,7 +18,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjekoooo@gmail.com", password: "hp1955");
     // Authentication.googleSignIn();
-    
+    RemoteConfiguration remoteConfig = RemoteConfiguration();
+    remoteConfig.init();
+
+    Admob admob = Admob();
+    admob.init();
+    admob.initAd();
     return MultiProvider(
       providers: [
         StreamProvider<FirebaseUser>.value(
