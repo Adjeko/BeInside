@@ -2,11 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_twitter_login/flutter_twitter_login.dart';
-
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 class Authentication {
   var auth = FirebaseAuth.instance;
-
 
   static void createUserWithEmail(String email, String password) async {
     final FirebaseUser user = (await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password)).user;
@@ -50,7 +49,11 @@ class Authentication {
   }
 
   static void twitterSignIn() async {
-    final TwitterLogin twitterLogin = new TwitterLogin(consumerKey: "hncQtcufyMp4W5fDXB7gDKxi5", consumerSecret: "LRyFD6mr0zzKS8VD6ocWLEc2vAC2zMXOGdJ3quq6AxoPpuZh4D");
+    final RemoteConfig remoteConfig = await RemoteConfig.instance;
+    String consumerKey = remoteConfig.getString("twitterConsumerKey");
+    String consumerSecret = remoteConfig.getString("twitterConsumerSecret");
+
+    final TwitterLogin twitterLogin = new TwitterLogin(consumerKey: consumerKey, consumerSecret: consumerSecret);
 
     //twitter has to be installed on the device for this line to work
     TwitterLoginResult twitterLoginResult = await twitterLogin.authorize();
