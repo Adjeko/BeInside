@@ -13,7 +13,7 @@ class Authentication {
   }
 
   static void signInWithEmail(String email, String password) async {
-    final FirebaseUser user = (await FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjekoooo@gmail.com", password: "hp1955")).user;
+    final FirebaseUser user = (await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password)).user;
   }
 
   static void signOut() async {
