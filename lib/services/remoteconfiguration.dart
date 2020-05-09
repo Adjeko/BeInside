@@ -11,7 +11,10 @@ class RemoteConfiguration {
 
   void init() async {
     final RemoteConfig rC = await RemoteConfig.instance;
-    GetIt.I.registerSingleton<RemoteConfig>(await RemoteConfig.instance);
+    if (!GetIt.I.isRegistered<RemoteConfig>()) {
+      GetIt.I.registerSingleton<RemoteConfig>(await RemoteConfig.instance);
+    }
+    
     await rC.setDefaults(defaults);
 
     await rC.fetch(expiration: const Duration(days: 1));

@@ -22,7 +22,13 @@ class Authentication {
 
   static void googleSignIn() async {
     final GoogleSignIn googleSignIn = new GoogleSignIn();
-    final GoogleSignInAccount acc = await googleSignIn.signIn();
+    GoogleSignInAccount acc;
+    try {
+      acc = await googleSignIn.signIn();
+    } catch (ex) {
+      print("Hier passiert eine PlatformException wenn der User die Anmeldung abbricht. $ex");
+    }
+    
     final GoogleSignInAuthentication googleAuth = await acc.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
@@ -71,4 +77,6 @@ class Authentication {
         break;
     }
   }
+
+
 }
