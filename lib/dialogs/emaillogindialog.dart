@@ -2,6 +2,8 @@ import 'package:beinside/services/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
+import 'package:beinside/pages/tutorialpage.dart';
+
 class EmailLoginDialog extends StatelessWidget {
   Duration get loginTime => Duration(milliseconds: 2250);
 
@@ -12,7 +14,7 @@ class EmailLoginDialog extends StatelessWidget {
     Authentication.signInWithEmail(data.name, data.password);
 
     return Future.delayed(loginTime).then((_) {
-      return "$data.name wird angemeldet";
+      return null;
     });
   }
 
@@ -21,7 +23,7 @@ class EmailLoginDialog extends StatelessWidget {
     Authentication.createUserWithEmail(data.name, data.password);
 
     return Future.delayed(loginTime).then((_) {
-      return "$data.name wurde erstellt";
+      return null;
     });
   }
 
@@ -42,11 +44,12 @@ class EmailLoginDialog extends StatelessWidget {
         logo: "assets/minion.jfif",
         onLogin: _authLogin,
         onSignup: _authSignup,
-        // onSubmitAnimationCompleted: () {
-        //   Navigator.of(context).pushReplacement(MaterialPageRoute(
-        //     builder: (context) => DashboardScreen(),
-        //   ));
-        // },
+        onSubmitAnimationCompleted: () {
+          Navigator.pushReplacement(context,
+          MaterialPageRoute(
+            builder: (context) => TutorialPage(),
+          ));
+        },
         onRecoverPassword: _recoverPassword,
       ),
     );
