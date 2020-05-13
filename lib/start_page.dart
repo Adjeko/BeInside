@@ -1,15 +1,71 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CharacterPage extends StatelessWidget {
+import 'room_page.dart';
+import 'character_page.dart';
+import 'quest_page.dart';
+
+class StartPage extends StatefulWidget {
+  @override
+  _StartPageState createState() => _StartPageState();
+}
+
+class _StartPageState extends State<StartPage> {
+  int _currentIndex = 0;
+
+  List<Widget> _children = [
+    RoomPage(),
+    QuestPage(),
+    CharacterPage(),
+  ];
+
+  List<String> testItems = {
+    "Item1",
+    "Item2",
+    "Item3",
+  }.toList();
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Text("Chracter");
-    // return Stack(
-    //   children: <Widget>[
-    //     _buildGradientBox(context),
-    //   ],
-    // );
+    return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+            onTap: onTabTapped,
+            currentIndex: _currentIndex,
+            items: [
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.home),
+                title: new Text("Home"),
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.mail),
+                title: new Text("Messages"),
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.person),
+                title: new Text("Profile"),
+              ),
+            ]),
+        body: Stack(
+          children: <Widget>[
+            _buildBackground(),
+            _buildGradientBox(context),
+            _children[_currentIndex],
+          ],
+        ));
+  }
+
+  Widget _buildBackground() {
+    return Container(
+        decoration: BoxDecoration(
+            color: Colors.grey[100],
+        )
+      );
   }
 
   Widget _buildGradientBox(BuildContext context) {
