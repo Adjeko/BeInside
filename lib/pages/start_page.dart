@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'room_page.dart';
-import 'character_page.dart';
-import 'quest_page.dart';
+import 'package:beinside/pages/room_page.dart';
+import 'package:beinside/pages/character_page.dart';
+import 'package:beinside/pages/quest_page.dart';
 
 class StartPage extends StatefulWidget {
   @override

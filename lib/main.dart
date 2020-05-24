@@ -1,32 +1,43 @@
-import 'package:beinside/quest_page.dart';
-import 'package:beinside/start_page.dart';
+import 'package:beinside/pages/quest_page.dart';
+import 'package:beinside/pages/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
-import 'room_page.dart';
-import 'room_page.dart';
+import 'package:beinside/models/taskList.dart';
+import 'package:beinside/services/authentication.dart';
+import 'package:beinside/services/admob.dart';
+import 'package:beinside/services/remoteconfiguration.dart';
+import 'package:beinside/widgets/loginCard.dart';
+
+import 'package:beinside/pages/room_page.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+    // FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjekoooo@gmail.com", password: "hp1955");
+    // Authentication.googleSignIn();
+    RemoteConfiguration remoteConfig = RemoteConfiguration();
+    remoteConfig.init();
+
+    // Admob admob = Admob();
+    // admob.init();
+    // admob.initAd();
+
+    return MultiProvider(
+      providers: [
+        StreamProvider<FirebaseUser>.value(
+            value: FirebaseAuth.instance.onAuthStateChanged),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: StartPage(),
       ),
-      home: StartPage(),
     );
   }
 }
