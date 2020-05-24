@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:beinside/pages/questdetailspage.dart';
+
 class QuestPage extends StatelessWidget {
   final List<String> testItems = {
     "Item1",
     "Item2",
     "Item3",
+  }.toList();
+  final List<IconData> testIcons = {
+    Icons.laptop_windows,
+    Icons.videogame_asset,
+    Icons.router,
   }.toList();
 
   @override
@@ -13,8 +20,11 @@ class QuestPage extends StatelessWidget {
     return Center(
       child: Column(
         children: <Widget>[
-          Image.network(
-              "https://blog.strava.com/wp-content/uploads/2017/03/FitFreshillustration.png"),
+          Opacity(
+            opacity: 0.3,
+            child: Image.network(
+                "https://blog.strava.com/wp-content/uploads/2017/03/FitFreshillustration.png"),
+          ),
           Container(
             child: Expanded(
               child: ListView.builder(
@@ -26,8 +36,19 @@ class QuestPage extends StatelessWidget {
                       child: Container(
                         child: Card(
                           child: Material(
-                            elevation: 5,
-                            child: ListTile(title: Text(testItems[i]))),
+                              elevation: 5,
+                              child: ListTile(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => QuestDetailsPage("quest"+i.toString(), testIcons[i]),)
+                                    );
+                                  },
+                                  leading: Hero(
+                                    tag: "quest"+i.toString(),
+                                    child: Icon(testIcons[i])),
+                                  title: Text(testItems[i]))),
                         ),
                         decoration: BoxDecoration(
                           color: Colors.white,

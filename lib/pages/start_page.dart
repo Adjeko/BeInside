@@ -14,9 +14,9 @@ class _StartPageState extends State<StartPage> {
   int _currentIndex = 1;
 
   List<Widget> _children = [
-    RoomPage(),
-    QuestPage(),
     CharacterPage(),
+    QuestPage(),
+    RoomPage(),
   ];
 
   List<String> testItems = {
@@ -45,7 +45,7 @@ class _StartPageState extends State<StartPage> {
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
+            icon: new Icon(Icons.accessibility_new),
             title: new Text("Charakter"),
           ),
           BottomNavigationBarItem(
@@ -53,7 +53,7 @@ class _StartPageState extends State<StartPage> {
             title: new Text("Aufgaben"),
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.person),
+            icon: new Icon(Icons.developer_board),
             title: new Text("Gruppen"),
           ),
         ],
@@ -71,6 +71,11 @@ class _StartPageState extends State<StartPage> {
 
   FloatingActionButton _buildFloatingActionButton() {
     if (_currentIndex == 1) {
+      return new FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
+      );
+    } else if (_currentIndex == 2) {
       return new FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {},
