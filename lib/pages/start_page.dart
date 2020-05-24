@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 import 'package:beinside/pages/room_page.dart';
 import 'package:beinside/pages/character_page.dart';
@@ -53,21 +54,30 @@ class _StartPageState extends State<StartPage> {
               child: Icon(Icons.more_vert)),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CurvedNavigationBar(
         onTap: onTabTapped,
-        currentIndex: _currentIndex,
+        backgroundColor: Colors.grey[100],
+        animationCurve: Curves.easeOutCubic,
+        height: 75,
+        index: _currentIndex,
         items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.accessibility_new),
-            title: new Text("Charakter"),
+          Column(
+            children: <Widget>[
+              Icon(Icons.accessibility_new),
+              Text("Charakter"),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.mail),
-            title: new Text("Aufgaben"),
+          Column(
+            children: <Widget>[
+              Icon(Icons.mail),
+              Text("Aufgaben"),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.developer_board),
-            title: new Text("Gruppen"),
+          Column(
+            children: <Widget>[
+              Icon(Icons.developer_board),
+              Text("Gruppen"),
+            ],
           ),
         ],
       ),
