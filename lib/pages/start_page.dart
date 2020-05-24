@@ -11,7 +11,7 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
-  int _currentIndex = 0;
+  int _currentIndex = 1;
 
   List<Widget> _children = [
     RoomPage(),
@@ -34,38 +34,55 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-            onTap: onTabTapped,
-            currentIndex: _currentIndex,
-            items: [
-              BottomNavigationBarItem(
-                icon: new Icon(Icons.home),
-                title: new Text("Home"),
-              ),
-              BottomNavigationBarItem(
-                icon: new Icon(Icons.mail),
-                title: new Text("Messages"),
-              ),
-              BottomNavigationBarItem(
-                icon: new Icon(Icons.person),
-                title: new Text("Profile"),
-              ),
-            ]),
-        body: Stack(
-          children: <Widget>[
-            _buildBackground(),
-            _buildGradientBox(context),
-            _children[_currentIndex],
-          ],
-        ));
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: Icon(Icons.arrow_back),
+        actions: <Widget>[Icon(Icons.more_vert)],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabTapped,
+        currentIndex: _currentIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.home),
+            title: new Text("Charakter"),
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.mail),
+            title: new Text("Aufgaben"),
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.person),
+            title: new Text("Gruppen"),
+          ),
+        ],
+      ),
+      body: Stack(
+        children: <Widget>[
+          _buildBackground(),
+          _buildGradientBox(context),
+          _children[_currentIndex],
+        ],
+      ),
+      floatingActionButton: _buildFloatingActionButton(),
+    );
+  }
+
+  FloatingActionButton _buildFloatingActionButton() {
+    if (_currentIndex == 1) {
+      return new FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
+      );
+    }
   }
 
   Widget _buildBackground() {
     return Container(
         decoration: BoxDecoration(
-            color: Colors.grey[100],
-        )
-      );
+      color: Colors.grey[100],
+    ));
   }
 
   Widget _buildGradientBox(BuildContext context) {
