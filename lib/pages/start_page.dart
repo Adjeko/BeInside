@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:beinside/pages/room_page.dart';
 import 'package:beinside/pages/character_page.dart';
 import 'package:beinside/pages/quest_page.dart';
+import 'package:beinside/dialogs/addtaskdialog.dart';
+import 'package:beinside/dialogs/addgroupdialog.dart';
+import 'package:beinside/pages/settingspage.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -38,7 +41,17 @@ class _StartPageState extends State<StartPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: Icon(Icons.arrow_back),
-        actions: <Widget>[Icon(Icons.more_vert)],
+        actions: <Widget>[
+          FlatButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SettingsPage(),
+                    ));
+              },
+              child: Icon(Icons.more_vert)),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
@@ -73,12 +86,22 @@ class _StartPageState extends State<StartPage> {
     if (_currentIndex == 1) {
       return new FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => AddTaskDialog(),
+          );
+        },
       );
     } else if (_currentIndex == 2) {
       return new FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => AddGroupDialog(),
+          );
+        },
       );
     }
   }
