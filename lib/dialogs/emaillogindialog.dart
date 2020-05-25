@@ -1,8 +1,9 @@
-import 'package:beinside/services/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
 import 'package:beinside/pages/tutorialpage.dart';
+import 'package:beinside/pages/start_page.dart';
+import 'package:beinside/services/authentication.dart';
 
 class EmailLoginDialog extends StatelessWidget {
   Duration get loginTime => Duration(milliseconds: 2250);
@@ -47,7 +48,7 @@ class EmailLoginDialog extends StatelessWidget {
         onSubmitAnimationCompleted: () {
           Navigator.pushReplacement(context,
           MaterialPageRoute(
-            builder: (context) => TutorialPage(),
+            builder: (context) => StartPage(),
           ));
         },
         onRecoverPassword: _recoverPassword,

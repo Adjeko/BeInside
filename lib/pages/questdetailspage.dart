@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:beinside/models/profiles.dart';
+
 class QuestDetailsPage extends StatelessWidget {
 
   final String _heroTag;
-  final IconData _icon;
+  final Profiles _profile;
 
-  QuestDetailsPage(this._heroTag, this._icon);
+  QuestDetailsPage(this._profile, this._heroTag);
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +22,14 @@ class QuestDetailsPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: <Widget>[
-            Text("Das ist der Titel"),
+            Text("Title: " + _profile.title),
             Hero(
               tag: _heroTag,
-              child: Icon(_icon)),
-            Text("Kategorie"),
-            Text("Aus der Gruppe"),
-            Text("Fortschritt"),
-            Text("Beschreibung"),
+              child: Text(_profile.icon)),
+            Text("Kategory: " + _profile.category),
+            Text("Gruppe: " + _profile.group),
+            Text("Fortschritt: "),
+            Text("Beschreibung: " + _profile.description),
           ],
         ),
       ),

@@ -9,8 +9,8 @@ import 'package:beinside/services/authentication.dart';
 import 'package:beinside/services/admob.dart';
 import 'package:beinside/services/remoteconfiguration.dart';
 import 'package:beinside/widgets/loginCard.dart';
-
 import 'package:beinside/pages/room_page.dart';
+import 'package:beinside/pages/loginpage.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,8 +19,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjekoooo@gmail.com", password: "hp1955");
     // Authentication.googleSignIn();
-    RemoteConfiguration remoteConfig = RemoteConfiguration();
-    remoteConfig.init();
+    
+    // RemoteConfiguration remoteConfig = RemoteConfiguration();
+    // remoteConfig.init();
 
     // Admob admob = Admob();
     // admob.init();
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: StartPage(),
+        home: LoginPage(),
       ),
     );
   }
