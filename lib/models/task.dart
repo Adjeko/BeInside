@@ -24,9 +24,10 @@ class Task {
     var rnd = Random();
     var _id = uuid.v1();
 
+    var rndInt = rnd.nextInt(35);
     return Task(
       id: _id,
-      icon: '🤠🤡💀🤖👾👻🐱‍🏍🐱‍👤🐵🐶🐺🐱🦁🐯🦒🦒🦊🐻🐲🐸🐸🐼🐠🎃🎪🎞🎞🛒👑⚽⛳🏆☎💣'[rnd.nextInt(33)],
+      icon: '🤠🤡💀🤖👾👻🐱‍🏍🐱‍👤🐵🐶🐺🐱🦁🐯🦒🦊🐻🐲🐸🐼🐠🎃🎪🎞🎞🛒👑⚽⛳🏆☎💣'.substring(rndInt*2, (rndInt + 1)*2),
       title: title,
       subtitle: subtitle,
       category: "Test",

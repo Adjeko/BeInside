@@ -91,8 +91,6 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                         Task.fromAddDialog(_title, _subtitle, _description);
 
                     Profiles.writeTaskToFirestore(_user, resultTask);
-                    // Scaffold.of(context).showSnackBar(
-                    //     SnackBar(content: Text("Aufgabe erstellt")));
                     Navigator.pop(context);
                   }
                 },
