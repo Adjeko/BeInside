@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -8,6 +9,7 @@ import 'package:beinside/pages/quest_page.dart';
 import 'package:beinside/dialogs/addtaskdialog.dart';
 import 'package:beinside/dialogs/addgroupdialog.dart';
 import 'package:beinside/pages/settingspage.dart';
+import 'package:provider/provider.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -99,7 +101,7 @@ class _StartPageState extends State<StartPage> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (BuildContext context) => AddTaskDialog(),
+            builder: (BuildContext context) => AddTaskDialog(user: Provider.of<FirebaseUser>(context)),
           );
         },
       );

@@ -1,19 +1,32 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:beinside/models/task.dart';
+import 'package:beinside/models/profiles.dart';
 
 class AddTaskDialog extends StatefulWidget {
+
+  final FirebaseUser user;
+
+  const AddTaskDialog({Key key, this.user}) : super(key: key);
+  
   @override
-  _AddTaskDialogState createState() => _AddTaskDialogState();
+  _AddTaskDialogState createState() => _AddTaskDialogState(user);
 }
 
 class _AddTaskDialogState extends State<AddTaskDialog> {
+
+  final FirebaseUser _user;
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _title;
   String _subtitle;
   String _description;
+
+  _AddTaskDialogState(this._user);
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +49,11 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                     _title = value;
                   },
                   validator: (value) {
-                    if(value.isEmpty) {
+                    if (value.isEmpty) {
                       return "Bitte gib einen Titel an.";
                     }
-                    return null;},
+                    return null;
+                  },
                 ),
               ),
               Text("Untertitel"),
@@ -50,10 +64,11 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                     _subtitle = value;
                   },
                   validator: (value) {
-                    if(value.isEmpty) {
+                    if (value.isEmpty) {
                       return "Bitte gib einen Untertitel an.";
                     }
-                    return null;},
+                    return null;
+                  },
                 ),
               ),
               Text("Beschreibung"),
@@ -63,16 +78,22 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                   onSaved: (value) {
                     _description = value;
                   },
-                  validator: (value) {return null;},
+                  validator: (value) {
+                    return null;
+                  },
                 ),
               ),
               RaisedButton(
                 onPressed: () {
-                  if(_formKey.currentState.validate()) {
+                  if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    Task resultTask = Task.fromAddDialog(_title, _subtitle, _description);
+                    Task resultTask =
+                        Task.fromAddDialog(_title, _subtitle, _description);
 
-                    Scaffold.of(context).showSnackBar(SnackBar(content: Text("Aufgabe erstellt")));
+                    Profiles.writeTaskToFirestore(_user, resultTask);
+                    // Scaffold.of(context).showSnackBar(
+                    //     SnackBar(content: Text("Aufgabe erstellt")));
+                    Navigator.pop(context);
                   }
                 },
                 child: Text("Erstellen"),

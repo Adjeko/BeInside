@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -22,10 +23,10 @@ class Task {
     var uuid = Uuid();
     var rnd = Random();
     var _id = uuid.v1();
-    
+
     return Task(
       id: _id,
-      icon: "🤠🤡💀🤖👾👻🐱‍🏍🐱‍👤🐵🐶🐺🐱🦁🐯🦒🦒🦊🐻🐲🐸🐸🐼🐠🎃🎪🎞🎞🛒👑⚽⛳🏆☎💣"[rnd.nextInt("🤠🤡💀🤖👾👻🐱‍🏍🐱‍👤🐵🐶🐺🐱🦁🐯🦒🦒🦊🐻🐲🐸🐸🐼🐠🎃🎪🎞🎞🛒👑⚽⛳🏆☎💣".length)],
+      icon: '🤠🤡💀🤖👾👻🐱‍🏍🐱‍👤🐵🐶🐺🐱🦁🐯🦒🦒🦊🐻🐲🐸🐸🐼🐠🎃🎪🎞🎞🛒👑⚽⛳🏆☎💣'[rnd.nextInt(33)],
       title: title,
       subtitle: subtitle,
       category: "Test",
@@ -34,6 +35,25 @@ class Task {
       created: DateTime.now(),
       heroTag: _id,
     );
+  }
+
+  factory Task.fromMap(Map taskMap) {
+    Timestamp _t = taskMap['created'];
+    return Task(
+      id: taskMap['id'],
+      icon: taskMap['icon'],
+      title: taskMap['title'],
+      subtitle: taskMap['subtitle'],
+      category: taskMap['category'],
+      group: taskMap['group'],
+      description: taskMap['description'],
+      created: DateTime.fromMillisecondsSinceEpoch(_t.millisecondsSinceEpoch),
+      heroTag: taskMap['id'],
+    );
+  }
+
+  Map asMap(){
+    return {"id": this.id, "icon": this.icon, "title": this.title, "subtitle": this.subtitle, "category": this.category, "group": this.group, "description": this.description, "created": this.created};
   }
 
   Widget buildListTile(BuildContext context) {

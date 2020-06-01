@@ -20,7 +20,7 @@ class QuestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var user = Provider.of<FirebaseUser>(context);
+    // var user = Provider.of<FirebaseUser>(context);
 
     return Center(
       child: Column(
@@ -32,12 +32,24 @@ class QuestPage extends StatelessWidget {
           ),
           Container(
             child: Expanded(
-              child: StreamBuilder<Profiles>(
-                stream: Profiles.streamTaskList(user),
-                builder: (context, snapshot) {
-                  Profiles profile = snapshot.data;
+              child: Consumer<FirebaseUser>(
+                builder: (context, user, child) {
+                  return StreamBuilder<Profiles>(
+                    stream: Profiles.streamTaskList(user),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return CircularProgressIndicator();
+                      }
+                      Profiles profile = snapshot.data;
 
-                  return Text("Test");
+                      return ListView.builder(
+                        itemCount: snapshot.data.tasks.length,
+                        itemBuilder: (context, i) {
+                          return snapshot.data.tasks[i].buildListTile(context);
+                        },
+                      );
+                    },
+                  );
                 },
               ),
             ),
