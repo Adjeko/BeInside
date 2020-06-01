@@ -3,6 +3,7 @@ import 'package:beinside/pages/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 import 'package:beinside/models/taskList.dart';
 import 'package:beinside/services/authentication.dart';
@@ -17,8 +18,6 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // FirebaseAuth.instance.signInWithEmailAndPassword(email: "adjekoooo@gmail.com", password: "hp1955");
-    // Authentication.googleSignIn();
     
     // RemoteConfiguration remoteConfig = RemoteConfiguration();
     // remoteConfig.init();
@@ -26,6 +25,9 @@ class MyApp extends StatelessWidget {
     // Admob admob = Admob();
     // admob.init();
     // admob.initAd();
+
+    //only allow portrait orientation
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     return MultiProvider(
       providers: [
