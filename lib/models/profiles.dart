@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:beinside/models/task.dart';
+
 class Profiles {
    final String id;
    final String icon;
@@ -9,11 +11,14 @@ class Profiles {
    final String category;
    final String group;
    final String description;
+   final Task tasks;
 
-   Profiles({this.id, this.icon, this.title, this.subtitle, this.category, this.group, this.description});
+   Profiles({this.id, this.icon, this.title, this.subtitle, this.category, this.group, this.description, this.tasks});
 
    factory Profiles.fromFirestore(DocumentSnapshot doc) {
-     Map data = doc.data;
+      Map data = doc.data;
+
+      List<Task> _tasks = List.from(data['tasks']);
 
       return Profiles(
         id: doc.documentID,

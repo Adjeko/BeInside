@@ -37,57 +37,7 @@ class QuestPage extends StatelessWidget {
                 builder: (context, snapshot) {
                   Profiles profile = snapshot.data;
 
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                    child: Dismissible(
-                      child: Container(
-                        child: Card(
-                          child: Material(
-                            elevation: 5,
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          QuestDetailsPage(profile, "quest"),
-                                    ));
-                              },
-                              leading: Hero(
-                                tag: "quest",
-                                child: Text(profile.icon),
-                              ),
-                              title: Text(profile.title),
-                              subtitle: Text(profile.subtitle),
-                            ),
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                          ),
-                        ),
-                      ),
-                      background: Container(
-                          color: Colors.green, child: Icon(Icons.check)),
-                      secondaryBackground: Container(
-                          color: Colors.red, child: Icon(Icons.cancel)),
-                      onDismissed: (direction) {
-                        switch (direction) {
-                          case DismissDirection.startToEnd:
-                            break;
-                          case DismissDirection.endToStart:
-                            break;
-                          default:
-                        }
-                      },
-                      key: ValueKey("Test"),
-                    ),
-                  );
+                  return Text("Test");
                 },
               ),
             ),
