@@ -59,6 +59,8 @@ class Profiles {
     );
   }
 
+  
+
   static void writeTaskToFirestore(FirebaseUser user, Task task) {
     List<Map> _list = List<Map>();
     _list.add(task.asMap());

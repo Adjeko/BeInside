@@ -112,7 +112,7 @@ class _StartPageState extends State<StartPage> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (BuildContext context) => AddGroupDialog(),
+            builder: (BuildContext context) => AddGroupDialog(user: Provider.of<FirebaseUser>(context)),
           );
         },
       );

@@ -17,17 +17,28 @@ class Task {
   final DateTime created;
   final String heroTag;
 
-  Task({this.id, this.icon, this.title, this.subtitle, this.category, this.group, this.description, this.created, this.heroTag});
+  Task(
+      {this.id,
+      this.icon,
+      this.title,
+      this.subtitle,
+      this.category,
+      this.group,
+      this.description,
+      this.created,
+      this.heroTag});
 
-  factory Task.fromAddDialog(title, subtitle, description){
+  factory Task.fromAddDialog(title, subtitle, description) {
     var uuid = Uuid();
     var rnd = Random();
     var _id = uuid.v1();
-
     var rndInt = rnd.nextInt(35);
+
     return Task(
       id: _id,
-      icon: '🤠🤡💀🤖👾👻🐱‍🏍🐱‍👤🐵🐶🐺🐱🦁🐯🦒🦊🐻🐲🐸🐼🐠🎃🎪🎞🎞🛒👑⚽⛳🏆☎💣'.substring(rndInt*2, (rndInt + 1)*2),
+      icon:
+          '🤠🤡💀🤖👾👻🐱‍🏍🐱‍👤🐵🐶🐺🐱🦁🐯🦒🦊🐻🐲🐸🐼🐠🎃🎪🎞🎞🛒👑⚽⛳🏆☎💣'
+              .substring(rndInt * 2, (rndInt + 1) * 2),
       title: title,
       subtitle: subtitle,
       category: "Test",
@@ -53,8 +64,17 @@ class Task {
     );
   }
 
-  Map asMap(){
-    return {"id": this.id, "icon": this.icon, "title": this.title, "subtitle": this.subtitle, "category": this.category, "group": this.group, "description": this.description, "created": this.created};
+  Map asMap() {
+    return {
+      "id": this.id,
+      "icon": this.icon,
+      "title": this.title,
+      "subtitle": this.subtitle,
+      "category": this.category,
+      "group": this.group,
+      "description": this.description,
+      "created": this.created
+    };
   }
 
   Widget buildListTile(BuildContext context) {
@@ -108,5 +128,4 @@ class Task {
       ),
     );
   }
-
 }
