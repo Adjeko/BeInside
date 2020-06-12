@@ -8,8 +8,9 @@ import 'package:get_it/get_it.dart';
 class Authentication {
   var auth = FirebaseAuth.instance;
 
-  static void createUserWithEmail(String email, String password) async {
+  static Future<FirebaseUser> createUserWithEmail(String email, String password) async {
     final FirebaseUser user = (await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password)).user;
+    return user;
   }
 
   static void signInWithEmail(String email, String password) async {

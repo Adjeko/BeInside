@@ -8,23 +8,10 @@ import 'package:beinside/models/task.dart';
 
 class Profiles {
   final String id;
-  final String icon;
-  final String title;
-  final String subtitle;
-  final String category;
-  final String group;
-  final String description;
+  final String username;
   final List<Task> tasks;
 
-  Profiles(
-      {this.id,
-      this.icon,
-      this.title,
-      this.subtitle,
-      this.category,
-      this.group,
-      this.description,
-      this.tasks});
+  Profiles({this.id, this.username, this.tasks});
 
   factory Profiles.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data;
@@ -32,34 +19,34 @@ class Profiles {
     List<Task> _tasks = List<Task>();
     var _t = doc.data['tasks'];
 
-    for(int i = 0; i < _t.length; i++) {
+    for (int i = 0; i < _t.length; i++) {
       _tasks.add(Task.fromMap(_t[i]));
     }
 
     return Profiles(
       id: doc.documentID,
-      icon: data['icon'] ?? 'no icon found in firestore',
-      title: data['title'] ?? 'no title found in firestore',
-      subtitle: data['subtitle'] ?? 'no subtitle found in firestore',
-      category: data['category'] ?? 'no category found in firestore',
-      group: data['group'] ?? 'no group found in firestore',
-      description: data['description'] ?? 'no description found in firestore',
+      username: data['username'] ?? "no username found in document",
       tasks: _tasks,
     );
   }
 
   factory Profiles.fromMap(Map data) {
     return Profiles(
-      icon: data['icon'] ?? '☠',
-      title: data['title'] ?? 'no title found in the map',
-      subtitle: data['subtitle'] ?? 'no subtitle found in the map',
-      category: data['category'] ?? 'no category found in firestore',
-      group: data['group'] ?? 'no group found in firestore',
-      description: data['description'] ?? 'no description found in firestore',
+      id: data['id'],
+      username: data['username'] ?? "no username found in document",
     );
   }
 
-  
+  static void createNewProfileInFirestore(FirebaseUser user) {
+    List<Map> _list = List<Map>();
+    _list.add(Task.tutorialTask().asMap());
+
+    Firestore.instance.collection('profiles').document(user.uid).setData({
+      'id': user.uid,
+      'username': 'TestUser',
+      'tasks': _list,
+    });
+  }
 
   static void writeTaskToFirestore(FirebaseUser user, Task task) {
     List<Map> _list = List<Map>();

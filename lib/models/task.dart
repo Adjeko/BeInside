@@ -64,6 +64,27 @@ class Task {
     );
   }
 
+  factory Task.tutorialTask() {
+    var uuid = Uuid();
+    var rnd = Random();
+    var _id = uuid.v1();
+    var rndInt = rnd.nextInt(35);
+
+    return Task(
+      id: _id,
+      icon:
+          '🤠🤡💀🤖👾👻🐱‍🏍🐱‍👤🐵🐶🐺🐱🦁🐯🦒🦊🐻🐲🐸🐼🐠🎃🎪🎞🎞🛒👑⚽⛳🏆☎💣'
+              .substring(rndInt * 2, (rndInt + 1) * 2),
+      title: 'Das ist eine Tutorial Aufgabe',
+      subtitle: "Sie zeigt dir wie Aufgaben funktionieren",
+      category: "Tutorial Kategorie",
+      group: "Tutorial Gruppe",
+      description: "Und wie eine Beschreibung aussieht",
+      created: DateTime.now(),
+      heroTag: _id,
+    );
+  }
+
   Map asMap() {
     return {
       "id": this.id,
