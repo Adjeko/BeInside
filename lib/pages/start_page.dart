@@ -60,6 +60,7 @@ class _StartPageState extends State<StartPage> {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         onTap: onTabTapped,
+        buttonBackgroundColor: Colors.blueGrey[100],
         backgroundColor: Colors.grey[100],
         animationCurve: Curves.easeOutCubic,
         height: 75,
@@ -98,78 +99,84 @@ class _StartPageState extends State<StartPage> {
 
   Widget _buildFloatingActionButton() {
     if (_currentIndex == 1) {
-      return SpeedDial(
-        animatedIcon: AnimatedIcons.add_event,
-        animatedIconTheme: IconThemeData(size: 22.0),
-        curve: Curves.bounceIn,
-        tooltip: 'Erstelle Aufgabe',
-        heroTag: 'aufgabespeeddial',
-        backgroundColor: Colors.blue,
-        elevation: 8.0,
-        shape: CircleBorder(),
-        children: [
-          SpeedDialChild(
-            child: Icon(Icons.add),
-            backgroundColor: Colors.red,
-            label: 'Aufgabe erstellen',
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) =>
-                    AddTaskDialog(user: Provider.of<FirebaseUser>(context)),
-              );
-            },
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.add),
-            backgroundColor: Colors.blue,
-            label: 'Wiederholungen erstellen',
-            onTap: () {},
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.add),
-            backgroundColor: Colors.green,
-            label: 'Meilensteine erstellen',
-            onTap: () {},
-          ),
-        ],
+      return Transform.translate(
+        offset: Offset(-20.0, -30.0),
+        child: SpeedDial(
+          animatedIcon: AnimatedIcons.add_event,
+          animatedIconTheme: IconThemeData(size: 22.0),
+          curve: Curves.bounceIn,
+          tooltip: 'Erstelle Aufgabe',
+          heroTag: 'aufgabespeeddial',
+          backgroundColor: Colors.blue,
+          elevation: 8.0,
+          shape: CircleBorder(),
+          children: [
+            SpeedDialChild(
+              child: Icon(Icons.add),
+              backgroundColor: Colors.red,
+              label: 'Aufgabe erstellen',
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      AddTaskDialog(user: Provider.of<FirebaseUser>(context)),
+                );
+              },
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.add),
+              backgroundColor: Colors.blue,
+              label: 'Wiederholungen erstellen',
+              onTap: () {},
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.add),
+              backgroundColor: Colors.green,
+              label: 'Meilensteine erstellen',
+              onTap: () {},
+            ),
+          ],
+        ),
       );
     } else if (_currentIndex == 2) {
-      return SpeedDial(
-        animatedIcon: AnimatedIcons.list_view,
-        animatedIconTheme: IconThemeData(size: 22.0),
-        curve: Curves.bounceIn,
-        tooltip: 'Gruppen verwalten',
-        heroTag: 'gruppespeeddial',
-        backgroundColor: Colors.orange,
-        elevation: 8.0,
-        shape: CircleBorder(),
-        children: [
-          SpeedDialChild(
-            child: Icon(Icons.add),
-            backgroundColor: Colors.green,
-            label: 'Gruppe erstellen',
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) =>
-                    AddGroupDialog(user: Provider.of<FirebaseUser>(context)),
-              );
-            },
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.add),
-            backgroundColor: Colors.blue,
-            label: 'Neue Gruppen suchen',
-            onTap: () {
-              Navigator.push(
+      return Transform.translate(
+        offset: Offset(-20.0, -30.0),
+        child: SpeedDial(
+          animatedIcon: AnimatedIcons.list_view,
+          animatedIconTheme: IconThemeData(size: 22.0),
+          curve: Curves.bounceIn,
+          tooltip: 'Gruppen verwalten',
+          heroTag: 'gruppespeeddial',
+          backgroundColor: Colors.orange,
+          elevation: 8.0,
+          shape: CircleBorder(),
+          children: [
+            SpeedDialChild(
+              child: Icon(Icons.add),
+              backgroundColor: Colors.green,
+              label: 'Gruppe erstellen',
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      AddGroupDialog(user: Provider.of<FirebaseUser>(context)),
+                );
+              },
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.add),
+              backgroundColor: Colors.blue,
+              label: 'Neue Gruppen suchen',
+              onTap: () {
+                Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => GroupSearchPage(),
                     ));
-            },
-          ),
-        ],
+              },
+            ),
+          ],
+        ),
       );
     }
   }

@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:beinside/models/group.dart';
+import 'package:beinside/models/profiles.dart';
 
 class GroupDetailsPage extends StatelessWidget {
-  final String _heroTag;
-  final IconData _icon;
+  final Group _group;
+  final FirebaseUser _user;
 
-  GroupDetailsPage(this._heroTag, this._icon);
+  GroupDetailsPage(this._group, this._user);
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +24,17 @@ class GroupDetailsPage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Text("Das ist der Name"),
-            Hero(
-              tag: _heroTag,
-              child: Icon(_icon)),
+            Hero(tag: _group.heroTag, child: Text(_group.icon)),
             Text("Author"),
             Text("Anzahl der Mitglieder"),
             Text("Beschreibung"),
             RaisedButton(
               elevation: 5,
               child: Text("Beitreten"),
-              onPressed: () {},
-              ),
+              onPressed: () {
+                Profiles.joinGroup(_user, _group);
+              },
+            ),
           ],
         ),
       ),

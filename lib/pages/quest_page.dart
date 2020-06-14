@@ -35,7 +35,7 @@ class QuestPage extends StatelessWidget {
               child: Consumer<FirebaseUser>(
                 builder: (context, user, child) {
                   return StreamBuilder<Profiles>(
-                    stream: Profiles.streamTaskList(user),
+                    stream: Profiles.streamProfileList(user),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
                         return CircularProgressIndicator();

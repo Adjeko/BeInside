@@ -1,7 +1,9 @@
 import 'package:beinside/pages/groupdetailspage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math';
 
@@ -43,6 +45,26 @@ class Group {
       title: title,
       subtitle: subtitle,
       description: description,
+      created: DateTime.now(),
+      heroTag: _id,
+      tasks: null,
+    );
+  }
+
+  factory Group.tutorialGroup() {
+    var uuid = Uuid();
+    var rnd = Random();
+    var _id = uuid.v1();
+    var rndInt = rnd.nextInt(23);
+
+    return Group(
+      id: _id,
+      author: "Tutorial Author",
+      icon: '✈🛰🛸🚀🚁🏟🏗🏘🏠⛩🛕🕋🏭🏫🏩🗼🏯🏥🗽🌉⛺🌅🌄💈'
+          .substring(rndInt * 2, (rndInt + 1) * 2),
+      title: "Tutorial Gruppe 1",
+      subtitle: "Um dir zu zeigen wie Gruppen funktionieren",
+      description: "und wie die Beschreibung aussieht",
       created: DateTime.now(),
       heroTag: _id,
       tasks: null,
@@ -114,7 +136,7 @@ class Group {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GroupDetailsPage(this.heroTag, Icons.group_add),
+                        builder: (context) => GroupDetailsPage(this, Provider.of<FirebaseUser>(context)),
                       ));
                 },
                 leading: Hero(
