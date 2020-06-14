@@ -1,3 +1,4 @@
+import 'package:beinside/pages/groupdetailspage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,32 @@ class Group {
     );
   }
 
+  factory Group.fromMap(Map map) {
+    Timestamp _t = map['created'];
+    return Group(
+      id: map['id'],
+      author: map['author'],
+      icon: map['icon'],
+      title: map['title'],
+      subtitle: map['subtitle'],
+      description: map['description'],
+      created: DateTime.fromMillisecondsSinceEpoch(_t.millisecondsSinceEpoch),
+      heroTag: map['id'],
+      tasks: null,
+    );
+  }
+
+  static List<Group> fromFirestore(DocumentSnapshot snap) {
+    List<Group> _groups = List<Group>();
+      var _t = snap.data['groups'];
+
+      for (int i = 0; i < _t.length; i++) {
+        _groups.add(Group.fromMap(_t[i]));
+      }
+
+      return _groups;
+  }
+
   Map<String, dynamic> asMap() {
     return {
       "id": this.id,
@@ -60,7 +87,69 @@ class Group {
     };
   }
 
+  static Stream<List<Group>> streamGroupSearchFromFirestore() {
+    return Firestore.instance.collection('groups').document('groupSearch').snapshots().map((snap) => Group.fromFirestore(snap));
+  }
+
   static void createGroupInFirestore(Group group) {
     Firestore.instance.collection('groups').document(group.id).setData(group.asMap());
+
+    List<Map> _list = List<Map>();
+    _list.add(group.asMap());
+    Firestore.instance.collection('groups').document('groupSearch').updateData({
+      "groups": FieldValue.arrayUnion(_list),
+    });
+  }
+
+  Widget buildListTile(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+      child: Dismissible(
+        child: Container(
+          child: Card(
+            child: Material(
+              elevation: 5,
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GroupDetailsPage(this.heroTag, Icons.group_add),
+                      ));
+                },
+                leading: Hero(
+                  tag: id,
+                  child: Text(icon),
+                ),
+                title: Text(title),
+                subtitle: Text(subtitle),
+              ),
+            ),
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+            ),
+          ),
+        ),
+        background: Container(color: Colors.green, child: Icon(Icons.check)),
+        secondaryBackground:
+            Container(color: Colors.red, child: Icon(Icons.cancel)),
+        onDismissed: (direction) {
+          switch (direction) {
+            case DismissDirection.startToEnd:
+              break;
+            case DismissDirection.endToStart:
+              break;
+            default:
+          }
+        },
+        key: ValueKey("Test"),
+      ),
+    );
   }
 }

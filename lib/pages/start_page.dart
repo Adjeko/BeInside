@@ -6,6 +6,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'package:beinside/pages/room_page.dart';
 import 'package:beinside/pages/character_page.dart';
+import 'package:beinside/pages/groupsearchpage.dart';
 import 'package:beinside/pages/quest_page.dart';
 import 'package:beinside/dialogs/addtaskdialog.dart';
 import 'package:beinside/dialogs/addgroupdialog.dart';
@@ -135,7 +136,7 @@ class _StartPageState extends State<StartPage> {
       );
     } else if (_currentIndex == 2) {
       return SpeedDial(
-        animatedIcon: AnimatedIcons.add_event,
+        animatedIcon: AnimatedIcons.list_view,
         animatedIconTheme: IconThemeData(size: 22.0),
         curve: Curves.bounceIn,
         tooltip: 'Gruppen verwalten',
@@ -146,8 +147,8 @@ class _StartPageState extends State<StartPage> {
         children: [
           SpeedDialChild(
             child: Icon(Icons.add),
-            backgroundColor: Colors.blue,
-            label: 'Neue Gruppen suchen',
+            backgroundColor: Colors.green,
+            label: 'Gruppe erstellen',
             onTap: () {
               showDialog(
                 context: context,
@@ -158,9 +159,15 @@ class _StartPageState extends State<StartPage> {
           ),
           SpeedDialChild(
             child: Icon(Icons.add),
-            backgroundColor: Colors.green,
-            label: 'Gruppe erstellen',
-            onTap: () {},
+            backgroundColor: Colors.blue,
+            label: 'Neue Gruppen suchen',
+            onTap: () {
+              Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GroupSearchPage(),
+                    ));
+            },
           ),
         ],
       );

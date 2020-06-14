@@ -88,7 +88,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                         Group.fromAddDialog(_user, _title, _subtitle, _description);
 
                     Group.createGroupInFirestore(resultGroup);
-                    // Navigator.pop(context);
+                    Navigator.pop(context);
                   }
                 },
                 child: Text("Erstellen"),
