@@ -36,6 +36,7 @@ class Group {
     var rnd = Random();
     var _id = uuid.v1();
     var rndInt = rnd.nextInt(23);
+    List<Task> _tasks = List<Task>();
 
     return Group(
       id: _id,
@@ -47,7 +48,7 @@ class Group {
       description: description,
       created: DateTime.now(),
       heroTag: _id,
-      tasks: null,
+      tasks: _tasks,
     );
   }
 
@@ -56,6 +57,8 @@ class Group {
     var rnd = Random();
     var _id = uuid.v1();
     var rndInt = rnd.nextInt(23);
+    List<Task> _task = List<Task>();
+    _task.add(Task.tutorialTask());
 
     return Group(
       id: _id,
@@ -67,12 +70,20 @@ class Group {
       description: "und wie die Beschreibung aussieht",
       created: DateTime.now(),
       heroTag: _id,
-      tasks: null,
+      tasks: _task,
     );
   }
 
   factory Group.fromMap(Map map) {
     Timestamp _t = map['created'];
+    List<Map> _taskMaps = List<Map>();
+    _taskMaps = map['tasks'];
+    List<Task> _tasks = List<Task>();
+
+    for (int i = 0; i < _taskMaps.length; i++) {
+      _tasks.add(Task.fromMap(_taskMaps[i]));
+    }
+
     return Group(
       id: map['id'],
       author: map['author'],
@@ -82,22 +93,27 @@ class Group {
       description: map['description'],
       created: DateTime.fromMillisecondsSinceEpoch(_t.millisecondsSinceEpoch),
       heroTag: map['id'],
-      tasks: null,
+      tasks: _tasks,
     );
   }
 
   static List<Group> fromFirestore(DocumentSnapshot snap) {
     List<Group> _groups = List<Group>();
-      var _t = snap.data['groups'];
+    var _t = snap.data['groups'];
 
-      for (int i = 0; i < _t.length; i++) {
-        _groups.add(Group.fromMap(_t[i]));
-      }
+    for (int i = 0; i < _t.length; i++) {
+      _groups.add(Group.fromMap(_t[i]));
+    }
 
-      return _groups;
+    return _groups;
   }
 
   Map<String, dynamic> asMap() {
+    List<Map> _tasks = List<Map>(tasks.length);
+    for (int i = 0; i < _tasks.length; i++) {
+      _tasks.add(tasks[i].asMap());
+    }
+
     return {
       "id": this.id,
       "author": this.author,
@@ -106,20 +122,32 @@ class Group {
       "subtitle": this.subtitle,
       "description": this.description,
       "created": this.created,
+      "tasks": _tasks,
     };
   }
 
   static Stream<List<Group>> streamGroupSearchFromFirestore() {
-    return Firestore.instance.collection('groups').document('groupSearch').snapshots().map((snap) => Group.fromFirestore(snap));
+    return Firestore.instance
+        .collection('groups')
+        .document('groupSearch')
+        .snapshots()
+        .map((snap) => Group.fromFirestore(snap));
   }
 
   static void createGroupInFirestore(Group group) {
-    Firestore.instance.collection('groups').document(group.id).setData(group.asMap());
+    Firestore.instance
+        .collection('groups')
+        .document(group.id)
+        .setData(group.asMap());
 
-    List<Map> _list = List<Map>();
-    _list.add(group.asMap());
+    List<Map> _groups = List<Map>();
+    Group _tmpGroup = group;
+    _tmpGroup.tasks.add(Task.tutorialTask());
+
+    _groups.add(group.asMap());
+
     Firestore.instance.collection('groups').document('groupSearch').updateData({
-      "groups": FieldValue.arrayUnion(_list),
+      "groups": FieldValue.arrayUnion(_groups),
     });
   }
 
@@ -136,7 +164,8 @@ class Group {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GroupDetailsPage(this, Provider.of<FirebaseUser>(context)),
+                        builder: (context) => GroupDetailsPage(
+                            this, Provider.of<FirebaseUser>(context)),
                       ));
                 },
                 leading: Hero(
