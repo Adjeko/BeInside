@@ -57,31 +57,18 @@ class _StartPageState extends State<StartPage> {
         ],
       ),
       bottomNavigationBar: CurvedNavigationBar(
-        onTap: onTabTapped,
-        backgroundColor: Colors.grey[100],
-        animationCurve: Curves.easeOutCubic,
-        height: 75,
         index: _currentIndex,
-        items: [
-          Column(
-            children: <Widget>[
-              Icon(Icons.accessibility_new),
-              Text("Charakter"),
-            ],
-          ),
-          Column(
-            children: <Widget>[
-              Icon(Icons.mail),
-              Text("Aufgaben"),
-            ],
-          ),
-          Column(
-            children: <Widget>[
-              Icon(Icons.developer_board),
-              Text("Gruppen"),
-            ],
-          ),
+        onTap: onTabTapped,
+        height: 50.0,
+        items: <Widget>[
+          Icon(Icons.accessibility_new, size: 30),
+          Icon(Icons.check_circle, size: 30),
+          Icon(Icons.group, size: 30),
         ],
+        color: Colors.white,
+        buttonBackgroundColor: Colors.white,
+        backgroundColor: Colors.grey[100],
+        animationCurve: Curves.easeInOut,
       ),
       body: Stack(
         children: <Widget>[
@@ -101,7 +88,8 @@ class _StartPageState extends State<StartPage> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (BuildContext context) => AddTaskDialog(user: Provider.of<FirebaseUser>(context)),
+            builder: (BuildContext context) =>
+                AddTaskDialog(user: Provider.of<FirebaseUser>(context)),
           );
         },
       );
@@ -112,7 +100,8 @@ class _StartPageState extends State<StartPage> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (BuildContext context) => AddGroupDialog(user: Provider.of<FirebaseUser>(context)),
+            builder: (BuildContext context) =>
+                AddGroupDialog(user: Provider.of<FirebaseUser>(context)),
           );
         },
       );
