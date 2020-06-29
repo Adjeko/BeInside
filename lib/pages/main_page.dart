@@ -1,7 +1,9 @@
 import 'package:beinside/pages/character_page.dart';
 import 'package:beinside/pages/quest_page.dart';
 import 'package:beinside/pages/room_page.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BottomNavigationBar;
+
+import 'package:beinside/widgets/bottomNavBar.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -29,6 +31,7 @@ class MainPageState extends State<MainPage> {
       appBar: AppBar(
         title: const Text('Sample Code'),
       ),
+      bottomNavigationBar: new BottomNavigationBar(_index),
       body: PageView(
         controller: _controller,
         children: const [
