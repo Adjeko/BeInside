@@ -1,7 +1,6 @@
+import 'package:beinside/widgets/bottomNavBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 import 'package:beinside/pages/room_page.dart';
 import 'package:beinside/pages/character_page.dart';
@@ -9,6 +8,7 @@ import 'package:beinside/pages/quest_page.dart';
 import 'package:beinside/dialogs/addtaskdialog.dart';
 import 'package:beinside/dialogs/addgroupdialog.dart';
 import 'package:beinside/pages/settingspage.dart';
+import 'package:flutter/material.dart' hide BottomNavigationBar;
 import 'package:provider/provider.dart';
 
 class StartPage extends StatefulWidget {
@@ -56,20 +56,7 @@ class _StartPageState extends State<StartPage> {
               child: Icon(Icons.more_vert)),
         ],
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        index: _currentIndex,
-        onTap: onTabTapped,
-        height: 50.0,
-        items: <Widget>[
-          Icon(Icons.accessibility_new, size: 30),
-          Icon(Icons.check_circle, size: 30),
-          Icon(Icons.group, size: 30),
-        ],
-        color: Colors.white,
-        buttonBackgroundColor: Colors.white,
-        backgroundColor: Colors.grey[100],
-        animationCurve: Curves.easeInOut,
-      ),
+      bottomNavigationBar: new BottomNavigationBar(),
       body: Stack(
         children: <Widget>[
           _buildBackground(),
