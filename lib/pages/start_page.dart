@@ -80,7 +80,7 @@ class _StartPageState extends State<StartPage> {
           );
         },
       );
-    } else if (_currentIndex == 2) {
+    } else {
       return new FloatingActionButton(
         backgroundColor: Colors.orange,
         child: Icon(Icons.add),
