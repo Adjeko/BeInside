@@ -1,4 +1,3 @@
-import 'package:beinside/widgets/bottomNavBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -56,7 +55,7 @@ class _StartPageState extends State<StartPage> {
               child: Icon(Icons.more_vert)),
         ],
       ),
-      bottomNavigationBar: new BottomNavigationBar(),
+      //bottomNavigationBar: new BottomNavigationBar(),
       body: Stack(
         children: <Widget>[
           _buildBackground(),

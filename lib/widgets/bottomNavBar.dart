@@ -3,6 +3,10 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'dart:developer';
 
 class BottomNavigationBar extends StatefulWidget {
+  final int selectedIndex;
+
+  const BottomNavigationBar({Key key, this.selectedIndex}) : super(key: key);
+
   @override
   _BottomNavigationBarState createState() => _BottomNavigationBarState();
 }
@@ -10,17 +14,10 @@ class BottomNavigationBar extends StatefulWidget {
 class _BottomNavigationBarState extends State<BottomNavigationBar> {
   int _selectedIndex = 1;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      log('Changed tab to index: $_selectedIndex');
-    });
-  }
-
   @override
   Widget build(BuildContext ctx) {
     return CurvedNavigationBar(
-      index: _selectedIndex,
+      index: widget.selectedIndex,
       onTap: _onItemTapped,
       height: 60.0,
       items: <Widget>[
@@ -33,5 +30,13 @@ class _BottomNavigationBarState extends State<BottomNavigationBar> {
       backgroundColor: Colors.grey[100],
       animationCurve: Curves.easeInOut,
     );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      // Navigator.pushNamed(context, "/");
+      log('Changed tab to index: $_selectedIndex');
+    });
   }
 }
