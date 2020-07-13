@@ -28,7 +28,7 @@ class RoomPage extends StatelessWidget {
           Opacity(
             opacity: 0.3,
             child: Image.network(
-                "https://blog.strava.com/wp-content/uploads/2017/03/FitFreshillustration.png"),
+                "https://images.unsplash.com/photo-1483428400520-675ef69a3bc4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"),
           ),
           Container(
             child: Expanded(

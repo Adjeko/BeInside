@@ -76,10 +76,11 @@ class Group {
 
   factory Group.fromMap(Map map) {
     Timestamp _t = map['created'];
+    String tmpTaskString;
     List<Map> _taskMaps = List<Map>();
-    _taskMaps = map['tasks'];
+    tmpTaskString = map['tasks'].toString();
     List<Task> _tasks = List<Task>();
-
+    // TODO: read tasks properly when they are created properly
     for (int i = 0; i < _taskMaps.length; i++) {
       _tasks.add(Task.fromMap(_taskMaps[i]));
     }
