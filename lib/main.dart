@@ -1,6 +1,5 @@
 import 'package:beinside/pages/loginpage.dart';
-import 'package:beinside/pages/main_page.dart';
-import 'package:beinside/pages/start_page.dart';
+import 'package:beinside/pages/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         routes: {
-          '/': (context) => MainPage(),
+          '/': (context) => Layout(),
           '/login': (context) => LoginPage(),
         },
       ),

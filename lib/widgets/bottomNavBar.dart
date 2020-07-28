@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'dart:developer';
 
+// TODO use VoidCallback to extract navbar and pass onItemTapped?
+// TODO use this widget
 class BottomNavigationBar extends StatefulWidget {
   final int selectedIndex;
 

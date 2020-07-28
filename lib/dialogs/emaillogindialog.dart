@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
-import 'package:beinside/pages/start_page.dart';
+import 'package:beinside/pages/deleted_startpage.dart';
 import 'package:beinside/services/authentication.dart';
 
 class EmailLoginDialog extends StatelessWidget {
