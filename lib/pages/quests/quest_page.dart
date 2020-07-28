@@ -2,21 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:beinside/pages/questdetailspage.dart';
 import 'package:beinside/models/profiles.dart';
 import 'package:provider/provider.dart';
 
 class QuestPage extends StatelessWidget {
-  final List<String> testItems = {
-    "Item1",
-    "Item2",
-    "Item3",
-  }.toList();
-  final List<IconData> testIcons = {
-    Icons.laptop_windows,
-    Icons.videogame_asset,
-    Icons.router,
-  }.toList();
+  const QuestPage();
 
   @override
   Widget build(BuildContext context) {

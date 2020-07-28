@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math';
 
-import 'package:beinside/pages/questdetailspage.dart';
+import 'package:beinside/pages/quests/questdetailspage.dart';
 
 class Task {
   final String id;

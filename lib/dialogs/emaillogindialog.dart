@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
-import 'package:beinside/pages/tutorialpage.dart';
-import 'package:beinside/pages/start_page.dart';
+import 'package:beinside/pages/deleted_startpage.dart';
 import 'package:beinside/services/authentication.dart';
 
 class EmailLoginDialog extends StatelessWidget {
@@ -11,7 +10,6 @@ class EmailLoginDialog extends StatelessWidget {
   EmailLoginDialog();
 
   Future<String> _authLogin(LoginData data) {
-
     Authentication.signInWithEmail(data.name, data.password);
 
     return Future.delayed(loginTime).then((_) {
@@ -20,7 +18,6 @@ class EmailLoginDialog extends StatelessWidget {
   }
 
   Future<String> _authSignup(LoginData data) {
-
     Authentication.createUserWithEmail(data.name, data.password);
 
     return Future.delayed(loginTime).then((_) {
@@ -46,10 +43,11 @@ class EmailLoginDialog extends StatelessWidget {
         onLogin: _authLogin,
         onSignup: _authSignup,
         onSubmitAnimationCompleted: () {
-          Navigator.pushReplacement(context,
-          MaterialPageRoute(
-            builder: (context) => StartPage(),
-          ));
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => StartPage(),
+              ));
         },
         onRecoverPassword: _recoverPassword,
       ),

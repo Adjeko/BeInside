@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:beinside/pages/groupdetailspage.dart';
+import 'package:beinside/pages/rooms/groupdetailspage.dart';
 
 class RoomPage extends StatelessWidget {
-  List<String> testGroups = {
-    "Group1",
-    "Group2",
-    "Group3",
-  }.toList();
-  final List<IconData> testIcons = {
-    Icons.kitchen,
-    Icons.pool,
-    Icons.beach_access,
-  }.toList();
+  const RoomPage();
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: ListView.builder(
-          itemCount: testGroups.length,
+          itemCount: 3,
           itemBuilder: (context, i) {
             return Card(
                 child: Material(
@@ -30,11 +21,11 @@ class RoomPage extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => GroupDetailsPage(
-                                    "group" + i.toString(), testIcons[i]),
+                                    "group" + i.toString(), Icons.kitchen),
                               ));
                         },
-                        leading: Icon(testIcons[i]),
-                        title: Text(testGroups[i]))));
+                        leading: Icon(Icons.kitchen),
+                        title: Text("Group1"))));
           }),
     );
   }

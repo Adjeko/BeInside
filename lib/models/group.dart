@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math';
 
@@ -61,6 +59,9 @@ class Group {
   }
 
   static void createGroupInFirestore(Group group) {
-    Firestore.instance.collection('groups').document(group.id).setData(group.asMap());
+    Firestore.instance
+        .collection('groups')
+        .document(group.id)
+        .setData(group.asMap());
   }
 }
