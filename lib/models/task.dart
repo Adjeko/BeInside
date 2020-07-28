@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -98,6 +100,14 @@ class Task {
     };
   }
 
+  void removeFromFirebase(String userId) {
+    List<Map> tmp = List<Map>();
+    tmp.add(this.asMap());
+    Firestore.instance.collection('profiles').document(userId).updateData({
+      "tasks": FieldValue.arrayRemove(tmp),
+    });
+  }
+
   Widget buildListTile(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
@@ -141,6 +151,9 @@ class Task {
             case DismissDirection.startToEnd:
               break;
             case DismissDirection.endToStart:
+              FirebaseUser user =
+                  Provider.of<FirebaseUser>(context, listen: false);
+              removeFromFirebase(user.uid);
               break;
             default:
           }
