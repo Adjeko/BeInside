@@ -1,6 +1,8 @@
-import 'package:beinside/pages/loginpage.dart';
-import 'package:beinside/pages/main_page.dart';
-import 'package:beinside/pages/start_page.dart';
+import 'package:beinside/pages/login/loginpage.dart';
+import 'package:beinside/pages/layout.dart';
+import 'package:beinside/pages/quests/questdetailspage.dart';
+import 'package:beinside/pages/settings/settingspage.dart';
+import 'package:beinside/pages/tutorial/tutorialpage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -33,8 +35,11 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         routes: {
-          '/': (context) => MainPage(),
+          '/': (context) => Layout(),
           '/login': (context) => LoginPage(),
+          '/tutorial': (context) => TutorialPage(),
+          '/settings': (context) => SettingsPage()
+          //TODO add quest, rooms and character pages
         },
       ),
     );

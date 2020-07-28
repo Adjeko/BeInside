@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:beinside/pages/groupdetailspage.dart';
+import 'package:beinside/pages/rooms/groupdetailspage.dart';
 
 class RoomPage extends StatelessWidget {
   const RoomPage();

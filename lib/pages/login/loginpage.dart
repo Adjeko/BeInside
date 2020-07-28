@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:beinside/widgets/loginCard.dart';
+import 'package:beinside/pages/login/loginCard.dart';
 
-class LoginPage extends StatelessWidget{
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,5 +12,4 @@ class LoginPage extends StatelessWidget{
       ),
     );
   }
-
 }

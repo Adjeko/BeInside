@@ -1,7 +1,7 @@
+import 'package:beinside/pages/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
-import 'package:beinside/pages/start_page.dart';
 import 'package:beinside/services/authentication.dart';
 
 class EmailLoginDialog extends StatelessWidget {
@@ -43,11 +43,7 @@ class EmailLoginDialog extends StatelessWidget {
         onLogin: _authLogin,
         onSignup: _authSignup,
         onSubmitAnimationCompleted: () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => StartPage(),
-              ));
+          Navigator.pushNamed(context, '/');
         },
         onRecoverPassword: _recoverPassword,
       ),
