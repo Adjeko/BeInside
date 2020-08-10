@@ -74,7 +74,29 @@ exports.addPersonalTask = functions
         ]);
 
     });
-// exports.updatePersonalTask = functions.region('europe-west3')
+
+exports.updatePersonalTask = functions
+    .region('europe-west3')
+    .firestore.document('player/{userId}/tasks/{taskId}')
+    .onUpdate((change, context) => {
+        const userId = context.params.userId;
+        // const taskId = context.params.taskId;
+
+        const newValue = change.after.data();
+        const previousValue = change.before.data();
+
+        //first delete old task from index array
+        return admin.firestore().doc(`player/${userId}`).update({
+            tasks: admin.firestore.FieldValue.arrayRemove(previousValue)
+        })
+        //then add the new task to the index array AND update in task subcollection
+        .then(() => Promise.all([
+            admin.firestore().doc(`player/${userId}`).update({
+                tasks: admin.firestore.FieldValue.arrayUnion(newValue)
+            }),
+            change.after.ref.set(newValue, {merge: true})
+        ]));
+    });
 // exports.deletePersonalTask = functions.region('europe-west3')
 
 // ##############################################
