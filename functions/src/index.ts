@@ -21,7 +21,7 @@ exports.createProfile = functions
 
         const profiles = admin.firestore().collection('player');
 
-        //create new profile with two subcollections
+        //create new profile
         return profiles.doc(user.uid).set({
             id: user.uid,
             tasks: [],
@@ -147,14 +147,45 @@ exports.updateGroup = functions
     .region('europe-west3')
     .firestore.document('groups/{groupId}')
     .onUpdate((change, context) => {
-        // const groupId = context.params.groupId;
+        const returnPromises = [] as Array<Promise<any>>;
+        const groupId = context.params.groupId;
 
         const newValue = change.after.data();
         const previousValue = change.before.data();
 
-        //TODO update Group in all member profiles
+        const members = newValue.members as Array<String>;
 
-        return Promise.all([
+        members.forEach(memberId => {
+            returnPromises.push(
+                admin.firestore().doc(`player/${memberId}`).get().then(
+                    (playerSnap) => {
+                        let searchGroup;
+                        const searchDoc = playerSnap.data()?.groups as Array<any>;
+                        searchDoc.forEach(group => {
+                            if(group.groupId === groupId) {
+                                searchGroup = group;
+                            }
+                        });
+
+                        const groupForPlayer = newValue;
+                        delete groupForPlayer.members;
+
+                        return Promise.all([
+                            //delete old group (the found one) from index array
+                            admin.firestore().doc(`player/${memberId}`).update({
+                                groups: admin.firestore.FieldValue.arrayRemove(searchGroup)
+                            }),
+                            //add the updated group to the index array
+                            admin.firestore().doc(`player/${memberId}`).update({
+                                groups: admin.firestore.FieldValue.arrayUnion(groupForPlayer)
+                            }),
+                        ]);
+                    }
+                )
+            );
+        });
+
+        returnPromises.concat([
             //delete old task from index array
             admin.firestore().doc(`global/groupIndex`).update({
                 groups: admin.firestore.FieldValue.arrayRemove(previousValue)
@@ -166,19 +197,52 @@ exports.updateGroup = functions
             //update it in subcollection
             change.after.ref.set(newValue, { merge: true })
         ]);
+
+        return Promise.all(returnPromises);
     });
 
 exports.deleteGroup = functions
     .region('europe-west3')
     .firestore.document('groups/{groupId}')
     .onDelete((snap, context) => {
-        // const groupId = context.params.groupId;
+        const returnPromises = [] as Array<Promise<any>>;
+        const groupId = context.params.groupId;
 
         const deletedValue = snap.data();
 
-        //TODO delete Group in all member profiles
+        const members = deletedValue.members as Array<String>;
 
-        return Promise.all([
+        members.forEach(memberId => {
+            returnPromises.push(
+                admin.firestore().doc(`player/${memberId}`).get().then(
+                    (playerSnap) => {
+                        let searchGroup;
+                        const searchDoc = playerSnap.data()?.groups as Array<any>;
+                        searchDoc.forEach(group => {
+                            if(group.groupId === groupId) {
+                                searchGroup = group;
+                            }
+                        });
+
+                        const groupForPlayer = deletedValue;
+                        delete groupForPlayer.members;
+
+                        return Promise.all([
+                            //delete old group (the found one) from index array
+                            admin.firestore().doc(`player/${memberId}`).update({
+                                groups: admin.firestore.FieldValue.arrayRemove(searchGroup)
+                            }),
+                            //delete old group from groupIds
+                            admin.firestore().doc(`player/${memberId}`).update({
+                                groupIds: admin.firestore.FieldValue.arrayRemove(groupId)
+                            }),
+                        ]);
+                    }
+                )
+            );
+        });
+
+        returnPromises.concat([
             //delete task from index array
             admin.firestore().doc(`global/groupIndex`).update({
                 groups: admin.firestore.FieldValue.arrayRemove(deletedValue)
@@ -186,6 +250,8 @@ exports.deleteGroup = functions
             //delete it in subcollection
             snap.ref.delete()
         ]);
+
+        return Promise.all(returnPromises);
     });
 
 // ##############################################
@@ -195,6 +261,7 @@ exports.addGroupTask = functions
     .region('europe-west3')
     .firestore.document('groups/{groupId}/tasks/{taskId}')
     .onCreate((snap, context) => {
+        const returnPromises = [] as Array<Promise<any>>;
         const groupId = context.params.groupId;
         const taskId = context.params.taskId;
 
@@ -206,8 +273,6 @@ exports.addGroupTask = functions
         if (!newValue.taskId) {
             newValue.taskId = taskId;
         }
-
-        //TODO: add task to all members
 
         return Promise.all([
             //fulfill the request by creating new task in groups/tasks.
@@ -294,14 +359,20 @@ exports.joinOrLeaveGroup = functions
                 //first get group by id
                 admin.firestore().doc(`groups/${groupId}`).get()
                     //then add group object to this profiles groups array
-                    .then((groupSnap) => Promise.all([
+                    .then((groupSnap) => {
+                        const indexGroup = groupSnap.data();
+                        if (indexGroup) {
+                            delete indexGroup.members;
+                        }
+                        
+                        return Promise.all([
                         admin.firestore().doc(`player/${userId}`).update({
-                            groups: admin.firestore.FieldValue.arrayUnion(groupSnap.data())
+                            groups: admin.firestore.FieldValue.arrayUnion(indexGroup)
                         }),
                         groupSnap.ref.update({
                             members: admin.firestore.FieldValue.arrayUnion(userId)
-                        })
-                    ]))
+                        })]);
+                })
             );
         });
         removedGroups.forEach(groupId => {
