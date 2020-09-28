@@ -87,7 +87,7 @@ class Task {
     );
   }
 
-  Map asMap() {
+  Map<String, dynamic> asMap() {
     return {
       "id": this.id,
       "icon": this.icon,
@@ -98,6 +98,10 @@ class Task {
       "description": this.description,
       "created": this.created
     };
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return this.asMap();
   }
 
   void removeFromFirebase(String userId) {

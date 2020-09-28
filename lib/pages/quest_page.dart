@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:beinside/pages/questdetailspage.dart';
-import 'package:beinside/models/profiles.dart';
+import 'package:beinside/models/profile.dart';
 import 'package:provider/provider.dart';
 
 class QuestPage extends StatelessWidget {
@@ -34,16 +34,16 @@ class QuestPage extends StatelessWidget {
             child: Expanded(
               child: Consumer<FirebaseUser>(
                 builder: (context, user, child) {
-                  return StreamBuilder<Profiles>(
-                    stream: Profiles.streamProfileList(user),
+                  return StreamBuilder<Profile>(
+                    stream: Profile.streamProfileList(user),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
                         return CircularProgressIndicator();
                       }
-                      Profiles profile = snapshot.data;
+                      Profile profile = snapshot.data;
 
                       return ListView.builder(
-                        itemCount: snapshot.data.tasks.length,
+                        itemCount: profile.tasks.length,
                         itemBuilder: (context, i) {
                           return snapshot.data.tasks[i].buildListTile(context);
                         },

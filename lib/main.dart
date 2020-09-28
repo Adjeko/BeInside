@@ -10,7 +10,7 @@ import 'package:beinside/services/remoteconfiguration.dart';
 import 'package:beinside/widgets/loginCard.dart';
 import 'package:beinside/pages/room_page.dart';
 import 'package:beinside/pages/loginpage.dart';
-import 'package:beinside/models/profiles.dart';
+import 'package:beinside/models/profile.dart';
 import 'package:beinside/pages/quest_page.dart';
 import 'package:beinside/pages/start_page.dart';
 

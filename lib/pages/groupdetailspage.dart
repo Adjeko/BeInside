@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:beinside/models/group.dart';
-import 'package:beinside/models/profiles.dart';
+import 'package:beinside/models/profile.dart';
 
 class GroupDetailsPage extends StatelessWidget {
   final Group _group;
@@ -32,7 +32,7 @@ class GroupDetailsPage extends StatelessWidget {
               elevation: 5,
               child: Text("Beitreten"),
               onPressed: () {
-                Profiles.joinGroup(_user, _group);
+                Profile.joinGroup(_user, _group);
               },
             ),
           ],

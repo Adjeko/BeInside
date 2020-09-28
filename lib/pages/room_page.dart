@@ -1,4 +1,4 @@
-import 'package:beinside/models/profiles.dart';
+import 'package:beinside/models/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -21,7 +21,6 @@ class RoomPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Center(
       child: Column(
         children: <Widget>[
@@ -34,13 +33,13 @@ class RoomPage extends StatelessWidget {
             child: Expanded(
               child: Consumer<FirebaseUser>(
                 builder: (context, user, child) {
-                  return StreamBuilder<Profiles>(
-                    stream: Profiles.streamProfileList(user),
+                  return StreamBuilder<Profile>(
+                    stream: Profile.streamProfileList(user),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
                         return CircularProgressIndicator();
                       }
-                      Profiles profile = snapshot.data;
+                      Profile profile = snapshot.data;
 
                       return ListView.builder(
                         itemCount: profile.groups.length,
@@ -58,8 +57,6 @@ class RoomPage extends StatelessWidget {
       ),
     );
 
-
-
     return Center(
       child: ListView.builder(
           itemCount: testGroups.length,
@@ -72,8 +69,9 @@ class RoomPage extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    GroupDetailsPage(Group.tutorialGroup(), Provider.of<FirebaseUser>(context)),
+                                builder: (context) => GroupDetailsPage(
+                                    Group.tutorialGroup(),
+                                    Provider.of<FirebaseUser>(context)),
                               ));
                         },
                         leading: Icon(testIcons[i]),

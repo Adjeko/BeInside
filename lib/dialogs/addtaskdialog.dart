@@ -1,23 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:beinside/models/task.dart';
-import 'package:beinside/models/profiles.dart';
+import 'package:beinside/models/profile.dart';
 
 class AddTaskDialog extends StatefulWidget {
-
   final FirebaseUser user;
 
   const AddTaskDialog({Key key, this.user}) : super(key: key);
-  
+
   @override
   _AddTaskDialogState createState() => _AddTaskDialogState(user);
 }
 
 class _AddTaskDialogState extends State<AddTaskDialog> {
-
   final FirebaseUser _user;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -90,7 +87,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                     Task resultTask =
                         Task.fromAddDialog(_title, _subtitle, _description);
 
-                    Profiles.writeTaskToFirestore(_user, resultTask);
+                    Profile.createPersonalTask(_user, resultTask);
                     Navigator.pop(context);
                   }
                 },

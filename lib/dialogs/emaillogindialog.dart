@@ -5,7 +5,7 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:beinside/pages/tutorialpage.dart';
 import 'package:beinside/pages/start_page.dart';
 import 'package:beinside/services/authentication.dart';
-import 'package:beinside/models/profiles.dart';
+import 'package:beinside/models/profile.dart';
 
 class EmailLoginDialog extends StatelessWidget {
   Duration get loginTime => Duration(milliseconds: 2250);

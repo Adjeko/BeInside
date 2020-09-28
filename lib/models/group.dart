@@ -19,6 +19,7 @@ class Group {
   final DateTime created;
   final String heroTag;
   final List<Task> tasks;
+  final String groupId;
 
   Group(
       {this.id,
@@ -29,7 +30,8 @@ class Group {
       this.description,
       this.created,
       this.heroTag,
-      this.tasks});
+      this.tasks,
+      this.groupId});
 
   factory Group.fromAddDialog(user, title, subtitle, description) {
     var uuid = Uuid();
@@ -95,6 +97,7 @@ class Group {
       created: DateTime.fromMillisecondsSinceEpoch(_t.millisecondsSinceEpoch),
       heroTag: map['id'],
       tasks: _tasks,
+      groupId: map['groupId'],
     );
   }
 
@@ -124,32 +127,20 @@ class Group {
       "description": this.description,
       "created": this.created,
       "tasks": _tasks,
+      "groupId": this.groupId,
     };
   }
 
   static Stream<List<Group>> streamGroupSearchFromFirestore() {
     return Firestore.instance
-        .collection('groups')
-        .document('groupSearch')
+        .collection('global')
+        .document('groupIndex')
         .snapshots()
         .map((snap) => Group.fromFirestore(snap));
   }
 
   static void createGroupInFirestore(Group group) {
-    Firestore.instance
-        .collection('groups')
-        .document(group.id)
-        .setData(group.asMap());
-
-    List<Map> _groups = List<Map>();
-    Group _tmpGroup = group;
-    _tmpGroup.tasks.add(Task.tutorialTask());
-
-    _groups.add(group.asMap());
-
-    Firestore.instance.collection('groups').document('groupSearch').updateData({
-      "groups": FieldValue.arrayUnion(_groups),
-    });
+    Firestore.instance.collection('groups').add(group.asMap());
   }
 
   Widget buildListTile(BuildContext context) {
