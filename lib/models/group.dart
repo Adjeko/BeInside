@@ -140,7 +140,7 @@ class Group {
   }
 
   static void createGroupInFirestore(Group group) {
-    Firestore.instance.collection('groups').add(group.asMap());
+    Firestore.instance.collection('group').add(group.asMap());
   }
 
   Widget buildListTile(BuildContext context) {

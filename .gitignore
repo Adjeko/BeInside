@@ -3,6 +3,14 @@ google-services.json
 key.jks
 key.properties
 
+## Compiled JavaScript files
+**/*.js
+**/*.js.map
+
+# Typescript v1 declaration files
+typings/
+
+node_modules/
 
 # Miscellaneous
 *.class

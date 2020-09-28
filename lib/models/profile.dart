@@ -36,14 +36,14 @@ class Profile {
   static void joinGroup(FirebaseUser user, Group group) {
     List<String> _list = List<String>();
     _list.add(group.groupId);
-    Firestore.instance.collection('player').document(user.uid).updateData({
+    Firestore.instance.collection('profile').document(user.uid).updateData({
       "groupIds": FieldValue.arrayUnion(_list),
     });
   }
 
   static void createPersonalTask(FirebaseUser user, Task task) {
     Firestore.instance
-        .collection('player')
+        .collection('profile')
         .document(user.uid)
         .collection('tasks')
         .add(task.toFirestore());
@@ -53,7 +53,7 @@ class Profile {
     if (user != null) {
       var _db = Firestore.instance;
       return _db
-          .collection('player')
+          .collection('profile')
           .document(user.uid)
           .snapshots()
           .map((snap) => Profile.fromFirestore(snap));
