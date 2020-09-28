@@ -35,6 +35,20 @@ class GroupDetailsPage extends StatelessWidget {
                 Profile.joinGroup(_user, _group);
               },
             ),
+            RaisedButton(
+              elevation: 5,
+              child: Text("Austreten"),
+              onPressed: () {
+                Profile.leaveGroup(_user, _group);
+              },
+            ),
+            RaisedButton(
+              elevation: 5,
+              child: Text("Löschen"),
+              onPressed: () {
+                Group.deleteGroupInFirestore(_group);
+              },
+            ),
           ],
         ),
       ),

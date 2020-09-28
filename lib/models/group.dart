@@ -143,6 +143,10 @@ class Group {
     Firestore.instance.collection('group').add(group.asMap());
   }
 
+  static void deleteGroupInFirestore(Group group) {
+    Firestore.instance.collection('group').document(group.groupId).delete();
+  }
+
   Widget buildListTile(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),

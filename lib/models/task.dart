@@ -1,3 +1,4 @@
+import 'package:beinside/models/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -18,17 +19,20 @@ class Task {
   final String description;
   final DateTime created;
   final String heroTag;
+  final String taskId;
 
-  Task(
-      {this.id,
-      this.icon,
-      this.title,
-      this.subtitle,
-      this.category,
-      this.group,
-      this.description,
-      this.created,
-      this.heroTag});
+  Task({
+    this.id,
+    this.icon,
+    this.title,
+    this.subtitle,
+    this.category,
+    this.group,
+    this.description,
+    this.created,
+    this.heroTag,
+    this.taskId,
+  });
 
   factory Task.fromAddDialog(title, subtitle, description) {
     var uuid = Uuid();
@@ -63,6 +67,7 @@ class Task {
       description: taskMap['description'],
       created: DateTime.fromMillisecondsSinceEpoch(_t.millisecondsSinceEpoch),
       heroTag: taskMap['id'],
+      taskId: taskMap['taskId'],
     );
   }
 
@@ -96,20 +101,13 @@ class Task {
       "category": this.category,
       "group": this.group,
       "description": this.description,
-      "created": this.created
+      "created": this.created,
+      "taskId": this.taskId,
     };
   }
 
   Map<String, dynamic> toFirestore() {
     return this.asMap();
-  }
-
-  void removeFromFirebase(String userId) {
-    List<Map> tmp = List<Map>();
-    tmp.add(this.asMap());
-    Firestore.instance.collection('profiles').document(userId).updateData({
-      "tasks": FieldValue.arrayRemove(tmp),
-    });
   }
 
   Widget buildListTile(BuildContext context) {
@@ -157,7 +155,7 @@ class Task {
             case DismissDirection.endToStart:
               FirebaseUser user =
                   Provider.of<FirebaseUser>(context, listen: false);
-              removeFromFirebase(user.uid);
+              Profile.deletePersonalTask(user, this);
               break;
             default:
           }

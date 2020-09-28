@@ -41,12 +41,29 @@ class Profile {
     });
   }
 
+  static void leaveGroup(FirebaseUser user, Group group) {
+    List<String> _list = List<String>();
+    _list.add(group.groupId);
+    Firestore.instance.collection('profile').document(user.uid).updateData({
+      "groupIds": FieldValue.arrayRemove(_list),
+    });
+  }
+
   static void createPersonalTask(FirebaseUser user, Task task) {
     Firestore.instance
         .collection('profile')
         .document(user.uid)
         .collection('tasks')
         .add(task.toFirestore());
+  }
+
+  static void deletePersonalTask(FirebaseUser user, Task task) {
+    Firestore.instance
+        .collection('profile')
+        .document(user.uid)
+        .collection('tasks')
+        .document(task.taskId)
+        .delete();
   }
 
   static Stream<Profile> streamProfileList(FirebaseUser user) {
